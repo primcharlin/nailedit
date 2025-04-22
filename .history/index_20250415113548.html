@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0" />
+        <title>Nail Salon Game</title>
+        <link
+            rel="stylesheet"
+            href="styles.css" />
+    </head>
+    <body>
+        <div id="game-container">
+            <!-- Main Menu -->
+            <div id="main-menu">
+                <h1 class="game-title">Nail Salon</h1>
+                <button
+                    class="mode-button"
+                    id="freestyle-button">
+                    Freestyle Mode
+                </button>
+                <button
+                    class="mode-button"
+                    id="challenge-button">
+                    Challenge Mode
+                </button>
+            </div>
+
+            <!-- Game Area -->
+            <div id="game-area">
+                <div id="hand">
+                    <div
+                        class="nail"
+                        id="nail-1"></div>
+                    <div
+                        class="nail"
+                        id="nail-2"></div>
+                    <div
+                        class="nail"
+                        id="nail-3"></div>
+                    <div
+                        class="nail"
+                        id="nail-4"></div>
+                    <div
+                        class="nail"
+                        id="nail-5"></div>
+                </div>
+
+                <!-- Tools Panel -->
+                <div id="tools-panel">
+                    <h2>Colors</h2>
+                    <div id="color-palette">
+                        <!-- Colors will be added dynamically -->
+                    </div>
+                    <h2>Decorations</h2>
+                    <div id="decorations">
+                        <!-- Decorations will be added dynamically -->
+                    </div>
+                </div>
+
+                <!-- Challenge Mode UI -->
+                <div id="challenge-ui">
+                    <h2>Reference Design</h2>
+                    <div id="reference-image"></div>
+                    <div id="timer">60</div>
+                </div>
+
+                <!-- Controls -->
+                <div id="controls">
+                    <button
+                        class="control-button"
+                        id="reset-button">
+                        Reset
+                    </button>
+                    <button
+                        class="control-button"
+                        id="back-button">
+                        Main Menu
+                    </button>
+                    <button
+                        class="control-button"
+                        id="done-button">
+                        Done
+                    </button>
+                </div>
+            </div>
+
+            <!-- Result Modal -->
+            <div id="result-modal">
+                <h2 id="result-title">Challenge Complete!</h2>
+                <p id="result-message">You scored 85% match. Great job!</p>
+                <div id="result-buttons">
+                    <button
+                        class="control-button"
+                        id="try-again-button">
+                        Try Again
+                    </button>
+                    <button
+                        class="control-button"
+                        id="menu-button">
+                        Main Menu
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script src="script.js"></script>
+    </body>
+</html>

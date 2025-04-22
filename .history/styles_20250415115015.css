@@ -1,0 +1,259 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Arial", sans-serif;
+}
+
+body {
+    background-image: url(/img/background.png)
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+#game-container {
+    width: 1440px;
+    height: 1080px;
+    position: relative;
+    background-image: url("/api/placeholder/1440/1080");
+    background-size: cover;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+/* Main Menu */
+#main-menu {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 234, 240, 0.8);
+    z-index: 100;
+}
+
+.game-title {
+    font-size: 72px;
+    color: #ff6b9a;
+    margin-bottom: 50px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.mode-button {
+    background-color: #ff6b9a;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    margin: 10px;
+    font-size: 24px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 300px;
+}
+
+.mode-button:hover {
+    background-color: #ff4d85;
+    transform: scale(1.05);
+}
+
+/* Game Area */
+#game-area {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+#hand {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 400px;
+    background-image: url("/api/placeholder/600/400");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.nail {
+    position: absolute;
+    width: 80px;
+    height: 120px;
+    background-color: #ffdee7;
+    border-radius: 40px 40px 0 0;
+    cursor: pointer;
+}
+
+#nail-1 {
+    top: 50px;
+    left: 120px;
+}
+#nail-2 {
+    top: 20px;
+    left: 220px;
+}
+#nail-3 {
+    top: 10px;
+    left: 320px;
+}
+#nail-4 {
+    top: 20px;
+    left: 420px;
+}
+#nail-5 {
+    top: 50px;
+    left: 520px;
+}
+
+/* Tools Panel */
+#tools-panel {
+    position: absolute;
+    left: 50px;
+    top: 50px;
+    width: 300px;
+    height: 80%;
+    background-color: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+#color-palette {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.color-option {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.color-option:hover {
+    transform: scale(1.1);
+}
+
+.color-option.selected {
+    border: 2px solid black;
+}
+
+#decorations {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.decoration-option {
+    width: 80px;
+    height: 80px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.decoration-option:hover {
+    transform: scale(1.1);
+}
+
+/* Challenge Mode UI */
+#challenge-ui {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    width: 300px;
+    background-color: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+#reference-image {
+    width: 100%;
+    height: 200px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+}
+
+#timer {
+    font-size: 32px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ff6b9a;
+}
+
+/* UI Controls */
+#controls {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+}
+
+.control-button {
+    background-color: #ff6b9a;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.control-button:hover {
+    background-color: #ff4d85;
+}
+
+/* Modal for results */
+#result-modal {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    background-color: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    z-index: 200;
+}
+
+#result-title {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #ff6b9a;
+}
+
+#result-message {
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+#result-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
