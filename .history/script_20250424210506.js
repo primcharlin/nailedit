@@ -116,16 +116,6 @@ function showCharacterSelection(mode) {
 function selectCharacter(characterId) {
     gameState.selectedCharacter = characterId;
     characterSelection.style.display = "none";
-
-    // Display the selected character in the game area
-    const characterDisplay = document.getElementById("character-display");
-    const selectedCharacter = document.querySelector(
-        `.character-option[data-character="${characterId}"] img`
-    );
-    if (selectedCharacter) {
-        characterDisplay.innerHTML = `<img src="${selectedCharacter.src}" alt="Selected Character">`;
-    }
-
     startGame(gameState.currentMode);
 }
 
@@ -270,10 +260,6 @@ function returnToMainMenu() {
     gameArea.style.display = "none";
     mainMenu.style.display = "flex";
     characterSelection.style.display = "none";
-
-    // Clear character display
-    const characterDisplay = document.getElementById("character-display");
-    characterDisplay.innerHTML = "";
 
     // Hide options container when returning to menu
     const optionsContainer = document.getElementById("options-container");

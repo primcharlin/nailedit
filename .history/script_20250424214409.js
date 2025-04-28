@@ -116,16 +116,6 @@ function showCharacterSelection(mode) {
 function selectCharacter(characterId) {
     gameState.selectedCharacter = characterId;
     characterSelection.style.display = "none";
-
-    // Display the selected character in the game area
-    const characterDisplay = document.getElementById("character-display");
-    const selectedCharacter = document.querySelector(
-        `.character-option[data-character="${characterId}"] img`
-    );
-    if (selectedCharacter) {
-        characterDisplay.innerHTML = `<img src="${selectedCharacter.src}" alt="Selected Character">`;
-    }
-
     startGame(gameState.currentMode);
 }
 
@@ -271,10 +261,6 @@ function returnToMainMenu() {
     mainMenu.style.display = "flex";
     characterSelection.style.display = "none";
 
-    // Clear character display
-    const characterDisplay = document.getElementById("character-display");
-    characterDisplay.innerHTML = "";
-
     // Hide options container when returning to menu
     const optionsContainer = document.getElementById("options-container");
     if (optionsContainer) {
@@ -354,202 +340,184 @@ const toolCategories = [
     {
         id: "baseColors",
         name: "Base Colors",
-        icon: '<svg viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="10" fill="#ff6b9a"/></svg>',
+        icon: "img/tools/base-colors.png",
         options: [
-            {
-                id: "baseColor1",
-                value: "#FF0000",
-                display:
-                    '<div class="color-preview" style="background-color: #FF0000;"></div>',
-            },
+            { id: "baseColor1", value: "#FF0000", icon: "img/colors/red.png" },
             {
                 id: "baseColor2",
                 value: "#FFA500",
-                display:
-                    '<div class="color-preview" style="background-color: #FFA500;"></div>',
+                icon: "img/colors/orange.png",
             },
             {
                 id: "baseColor3",
                 value: "#FFFF00",
-                display:
-                    '<div class="color-preview" style="background-color: #FFFF00;"></div>',
+                icon: "img/colors/yellow.png",
             },
             {
                 id: "baseColor4",
                 value: "#00FF00",
-                display:
-                    '<div class="color-preview" style="background-color: #00FF00;"></div>',
+                icon: "img/colors/green.png",
             },
-            {
-                id: "baseColor5",
-                value: "#0000FF",
-                display:
-                    '<div class="color-preview" style="background-color: #0000FF;"></div>',
-            },
+            { id: "baseColor5", value: "#0000FF", icon: "img/colors/blue.png" },
         ],
     },
     {
         id: "pastelColors",
-        name: "Pastel Colors",
-        icon: '<svg viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="10" fill="#FFC0CB"/></svg>',
+        name: "Pastel",
+        icon: "img/tools/pastel-colors.png",
         options: [
             {
                 id: "pastelColor1",
                 value: "#FFB6C1",
-                display:
-                    '<div class="color-preview" style="background-color: #FFB6C1;"></div>',
+                icon: "img/colors/pastel-pink.png",
             },
             {
                 id: "pastelColor2",
                 value: "#FFD700",
-                display:
-                    '<div class="color-preview" style="background-color: #FFD700;"></div>',
+                icon: "img/colors/pastel-yellow.png",
             },
             {
                 id: "pastelColor3",
                 value: "#98FB98",
-                display:
-                    '<div class="color-preview" style="background-color: #98FB98;"></div>',
+                icon: "img/colors/pastel-green.png",
             },
             {
                 id: "pastelColor4",
                 value: "#ADD8E6",
-                display:
-                    '<div class="color-preview" style="background-color: #ADD8E6;"></div>',
+                icon: "img/colors/pastel-blue.png",
             },
             {
                 id: "pastelColor5",
                 value: "#DDA0DD",
-                display:
-                    '<div class="color-preview" style="background-color: #DDA0DD;"></div>',
+                icon: "img/colors/pastel-purple.png",
             },
         ],
     },
     {
         id: "glitterColors",
         name: "Glitter",
-        icon: '<svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 3L13.5 8.5H19L14.5 12L16 17.5L12 14L8 17.5L9.5 12L5 8.5H10.5L12 3Z" fill="#FFD700"/></svg>',
+        icon: "img/tools/glitter.png",
         options: [
             {
                 id: "glitter1",
                 value: "glitter-gold",
-                display: '<div class="deco-preview glitter-gold"></div>',
+                icon: "img/decorations/glitter-gold.png",
             },
             {
                 id: "glitter2",
                 value: "glitter-silver",
-                display: '<div class="deco-preview glitter-silver"></div>',
+                icon: "img/decorations/glitter-silver.png",
             },
             {
                 id: "glitter3",
                 value: "glitter-rainbow",
-                display: '<div class="deco-preview glitter-rainbow"></div>',
+                icon: "img/decorations/glitter-rainbow.png",
             },
             {
                 id: "glitter4",
                 value: "glitter-blue",
-                display: '<div class="deco-preview glitter-blue"></div>',
+                icon: "img/decorations/glitter-blue.png",
             },
             {
                 id: "glitter5",
                 value: "glitter-pink",
-                display: '<div class="deco-preview glitter-pink"></div>',
+                icon: "img/decorations/glitter-pink.png",
             },
         ],
     },
     {
         id: "patterns",
         name: "Patterns",
-        icon: '<svg viewBox="0 0 24 24" width="24" height="24"><rect x="3" y="6" width="18" height="3" fill="#ff6b9a"/><rect x="3" y="12" width="18" height="3" fill="#ff6b9a"/><rect x="3" y="18" width="18" height="3" fill="#ff6b9a"/></svg>',
+        icon: "img/tools/patterns.png",
         options: [
             {
                 id: "pattern1",
                 value: "pattern-stripes",
-                display: '<div class="deco-preview pattern-stripes"></div>',
+                icon: "img/decorations/pattern-stripes.png",
             },
             {
                 id: "pattern2",
                 value: "pattern-dots",
-                display: '<div class="deco-preview pattern-dots"></div>',
+                icon: "img/decorations/pattern-dots.png",
             },
             {
                 id: "pattern3",
                 value: "pattern-zigzag",
-                display: '<div class="deco-preview pattern-zigzag"></div>',
+                icon: "img/decorations/pattern-zigzag.png",
             },
             {
                 id: "pattern4",
                 value: "pattern-leopard",
-                display: '<div class="deco-preview pattern-leopard"></div>',
+                icon: "img/decorations/pattern-leopard.png",
             },
             {
                 id: "pattern5",
                 value: "pattern-marble",
-                display: '<div class="deco-preview pattern-marble"></div>',
+                icon: "img/decorations/pattern-marble.png",
             },
         ],
     },
     {
         id: "stickers",
         name: "Stickers",
-        icon: '<svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#ff6b9a"/></svg>',
+        icon: "img/tools/stickers.png",
         options: [
             {
                 id: "sticker1",
                 value: "sticker-heart",
-                display: '<div class="deco-preview sticker-heart"></div>',
+                icon: "img/decorations/sticker-heart.png",
             },
             {
                 id: "sticker2",
                 value: "sticker-star",
-                display: '<div class="deco-preview sticker-star"></div>',
+                icon: "img/decorations/sticker-star.png",
             },
             {
                 id: "sticker3",
                 value: "sticker-flower",
-                display: '<div class="deco-preview sticker-flower"></div>',
+                icon: "img/decorations/sticker-flower.png",
             },
             {
                 id: "sticker4",
                 value: "sticker-butterfly",
-                display: '<div class="deco-preview sticker-butterfly"></div>',
+                icon: "img/decorations/sticker-butterfly.png",
             },
             {
                 id: "sticker5",
                 value: "sticker-diamond",
-                display: '<div class="deco-preview sticker-diamond"></div>',
+                icon: "img/decorations/sticker-diamond.png",
             },
         ],
     },
     {
         id: "gems",
         name: "Gems",
-        icon: '<svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 2L4 10l8 12 8-12-8-8z" fill="#00FFFF"/></svg>',
+        icon: "img/tools/gems.png",
         options: [
             {
                 id: "gem1",
                 value: "gem-round",
-                display: '<div class="deco-preview gem-round"></div>',
+                icon: "img/decorations/gem-round.png",
             },
             {
                 id: "gem2",
                 value: "gem-square",
-                display: '<div class="deco-preview gem-square"></div>',
+                icon: "img/decorations/gem-square.png",
             },
             {
                 id: "gem3",
                 value: "gem-teardrop",
-                display: '<div class="deco-preview gem-teardrop"></div>',
+                icon: "img/decorations/gem-teardrop.png",
             },
             {
                 id: "gem4",
                 value: "gem-heart",
-                display: '<div class="deco-preview gem-heart"></div>',
+                icon: "img/decorations/gem-heart.png",
             },
             {
                 id: "gem5",
                 value: "gem-star",
-                display: '<div class="deco-preview gem-star"></div>',
+                icon: "img/decorations/gem-star.png",
             },
         ],
     },
@@ -604,53 +572,29 @@ const resultMessage = document.getElementById("result-message");
 const tryAgainButton = document.getElementById("try-again-button");
 const menuButton = document.getElementById("menu-button");
 
-// Create and insert horizontal tools panel to replace the existing one
+// Create and insert horizontal tools panel
 function createToolsPanel() {
-    // Get the existing tools panel to replace it
-    const existingToolsPanel = document.getElementById("tools-panel");
-    if (!existingToolsPanel) return;
+    const toolsPanel = document.getElementById("tools-panel");
+    toolsPanel.className = "horizontal-tools-panel";
 
-    // Create new horizontal tools panel
-    const horizontalToolsPanel = document.createElement("div");
-    horizontalToolsPanel.id = "tools-panel";
-    horizontalToolsPanel.className = "horizontal-tools-panel";
-
-    // Create main category buttons
-    const categoryBar = document.createElement("div");
-    categoryBar.className = "category-bar";
-
-    // Create options container (initially hidden)
-    const optionsContainer = document.createElement("div");
-    optionsContainer.id = "options-container";
-    optionsContainer.className = "options-container";
-
-    // Add category buttons to the category bar
+    // Create category buttons
     toolCategories.forEach((category) => {
         const categoryButton = document.createElement("div");
         categoryButton.className = "category-button";
         categoryButton.dataset.categoryId = category.id;
-        categoryButton.innerHTML = `
-            <div class="category-icon">${category.icon}</div>
-            <div class="category-name">${category.name}</div>
-        `;
 
-        // Add click event to show options for this category
-        categoryButton.addEventListener("click", () => {
-            toggleCategoryOptions(category.id);
-        });
+        const icon = document.createElement("div");
+        icon.className = "category-icon";
+        icon.style.backgroundImage = `url(${category.icon})`;
 
-        categoryBar.appendChild(categoryButton);
+        const name = document.createElement("div");
+        name.className = "category-name";
+        name.textContent = category.name;
+
+        categoryButton.appendChild(icon);
+        categoryButton.appendChild(name);
+        toolsPanel.appendChild(categoryButton);
     });
-
-    // Append elements to tools panel
-    horizontalToolsPanel.appendChild(categoryBar);
-    horizontalToolsPanel.appendChild(optionsContainer);
-
-    // Replace existing tools panel with the new one
-    existingToolsPanel.parentNode.replaceChild(
-        horizontalToolsPanel,
-        existingToolsPanel
-    );
 }
 
 // Toggle options for a category
@@ -658,26 +602,20 @@ function toggleCategoryOptions(categoryId) {
     const optionsContainer = document.getElementById("options-container");
     const allCategoryButtons = document.querySelectorAll(".category-button");
 
-    // If clicking the same category, toggle its visibility
     if (gameState.activeToolCategory === categoryId) {
-        // Hide options
-        optionsContainer.innerHTML = "";
         optionsContainer.style.display = "none";
         gameState.activeToolCategory = null;
-
-        // Remove active class from all category buttons
-        allCategoryButtons.forEach((button) => {
-            button.classList.remove("active");
-        });
+        allCategoryButtons.forEach((button) =>
+            button.classList.remove("active")
+        );
     } else {
-        // Show options for the selected category
         const category = toolCategories.find((cat) => cat.id === categoryId);
         if (!category) return;
 
-        // Update active category
+        optionsContainer.innerHTML = "";
+        optionsContainer.style.display = "flex";
         gameState.activeToolCategory = categoryId;
 
-        // Update active button styling
         allCategoryButtons.forEach((button) => {
             if (button.dataset.categoryId === categoryId) {
                 button.classList.add("active");
@@ -686,19 +624,17 @@ function toggleCategoryOptions(categoryId) {
             }
         });
 
-        // Clear and populate options container
-        optionsContainer.innerHTML = "";
-        optionsContainer.style.display = "flex";
-
-        // Create options for this category
         category.options.forEach((option) => {
             const optionElement = document.createElement("div");
             optionElement.className = "option-item";
             optionElement.dataset.optionId = option.id;
             optionElement.dataset.optionValue = option.value;
-            optionElement.innerHTML = option.display;
 
-            // Add click event for this option
+            const icon = document.createElement("div");
+            icon.className = "option-icon";
+            icon.style.backgroundImage = `url(${option.icon})`;
+
+            optionElement.appendChild(icon);
             optionElement.addEventListener("click", () => {
                 selectToolOption(categoryId, option.value);
             });

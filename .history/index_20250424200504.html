@@ -16,59 +16,22 @@
     <body>
         <div id="game-container">
             <!-- Main Menu -->
-            <div
-                id="main-menu"
-                class="menu">
-                <h1>Nailed It!</h1>
-                <button id="freestyle-button">Freestyle</button>
-                <button id="challenge-button">Challenge</button>
-            </div>
-
-            <div
-                id="character-selection"
-                class="menu"
-                style="display: none">
-                <h1>Choose Your Character</h1>
-                <div class="character-grid">
-                    <div
-                        class="character-option"
-                        data-character="1">
-                        <img
-                            src="img/Avatar1.png"
-                            alt="Character 1" />
-                        <p>Emma</p>
-                    </div>
-                    <div
-                        class="character-option"
-                        data-character="2">
-                        <img
-                            src="img/Avatar2.png"
-                            alt="Character 2" />
-                        <p>Sophia</p>
-                    </div>
-                    <div
-                        class="character-option"
-                        data-character="3">
-                        <img
-                            src="img/Avatar3.png"
-                            alt="Character 3" />
-                        <p>Olivia</p>
-                    </div>
-                </div>
-                <button id="back-to-mode">Back</button>
+            <div id="main-menu">
+                <h1 class="game-title">Nailed it Salon</h1>
+                <button
+                    class="mode-button"
+                    id="freestyle-button">
+                    Freestyle Mode
+                </button>
+                <button
+                    class="mode-button"
+                    id="challenge-button">
+                    Challenge Mode
+                </button>
             </div>
 
             <!-- Game Area -->
-            <div
-                id="game-area"
-                class="game-area"
-                style="display: none">
-                <!-- Character Display -->
-                <div id="character-display"></div>
-
-                <!-- Tools Panel will be created dynamically -->
-                <div id="tools-panel"></div>
-
+            <div id="game-area">
                 <div id="hand">
                     <div
                         class="nail"
@@ -87,26 +50,22 @@
                         id="nail-5"></div>
                 </div>
 
+                <!-- Tools Panel -->
+                <div id="tools-panel">
+                    <h2>Colors</h2>
+                    <div id="color-palette">
+                        <!-- Colors will be added dynamically -->
+                    </div>
+                    <h2>Decorations</h2>
+                    <div id="decorations">
+                        <!-- Decorations will be added dynamically -->
+                    </div>
+                </div>
+
                 <!-- Challenge Mode UI -->
                 <div id="challenge-ui">
                     <h2>Reference Design</h2>
-                    <div id="reference-image">
-                        <div
-                            class="reference-nail"
-                            id="ref-nail-1"></div>
-                        <div
-                            class="reference-nail"
-                            id="ref-nail-2"></div>
-                        <div
-                            class="reference-nail"
-                            id="ref-nail-3"></div>
-                        <div
-                            class="reference-nail"
-                            id="ref-nail-4"></div>
-                        <div
-                            class="reference-nail"
-                            id="ref-nail-5"></div>
-                    </div>
+                    <div id="reference-image"></div>
                     <div id="timer">60</div>
                 </div>
 

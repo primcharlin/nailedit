@@ -1,7 +1,6 @@
 // Game state
 const gameState = {
     currentMode: null, // 'freestyle' or 'challenge'
-    selectedCharacter: null, // Stores the selected character
     selectedColor: null,
     selectedDecoration: null,
     selectedNail: null,
@@ -63,23 +62,8 @@ function initGame() {
 // Setup event listeners
 function setupEventListeners() {
     // Mode selection
-    freestyleButton.addEventListener("click", () =>
-        showCharacterSelection("freestyle")
-    );
-    challengeButton.addEventListener("click", () =>
-        showCharacterSelection("challenge")
-    );
-
-    // Character selection
-    characterOptions.forEach((option) => {
-        option.addEventListener("click", () => {
-            const characterId = option.dataset.character;
-            selectCharacter(characterId);
-        });
-    });
-
-    // Back button
-    backToModeButton.addEventListener("click", returnToModeSelection);
+    freestyleButton.addEventListener("click", () => startGame("freestyle"));
+    challengeButton.addEventListener("click", () => startGame("challenge"));
 
     // Nail selection
     nails.forEach((nail) => {
@@ -103,38 +87,6 @@ function setupEventListeners() {
         resultModal.style.display = "none";
         returnToMainMenu();
     });
-}
-
-// Show character selection screen
-function showCharacterSelection(mode) {
-    gameState.currentMode = mode;
-    mainMenu.style.display = "none";
-    characterSelection.style.display = "flex";
-}
-
-// Handle character selection
-function selectCharacter(characterId) {
-    gameState.selectedCharacter = characterId;
-    characterSelection.style.display = "none";
-
-    // Display the selected character in the game area
-    const characterDisplay = document.getElementById("character-display");
-    const selectedCharacter = document.querySelector(
-        `.character-option[data-character="${characterId}"] img`
-    );
-    if (selectedCharacter) {
-        characterDisplay.innerHTML = `<img src="${selectedCharacter.src}" alt="Selected Character">`;
-    }
-
-    startGame(gameState.currentMode);
-}
-
-// Return to mode selection
-function returnToModeSelection() {
-    characterSelection.style.display = "none";
-    mainMenu.style.display = "flex";
-    gameState.currentMode = null;
-    gameState.selectedCharacter = null;
 }
 
 // Start the game based on selected mode
@@ -269,11 +221,6 @@ function returnToMainMenu() {
     clearInterval(gameState.timerInterval);
     gameArea.style.display = "none";
     mainMenu.style.display = "flex";
-    characterSelection.style.display = "none";
-
-    // Clear character display
-    const characterDisplay = document.getElementById("character-display");
-    characterDisplay.innerHTML = "";
 
     // Hide options container when returning to menu
     const optionsContainer = document.getElementById("options-container");
@@ -288,8 +235,6 @@ function returnToMainMenu() {
     });
 
     gameState.activeToolCategory = null;
-    gameState.currentMode = null;
-    gameState.selectedCharacter = null;
 }
 
 // Complete design (done button clicked)
@@ -585,12 +530,9 @@ const challengeDesigns = [
 
 // DOM Elements
 const mainMenu = document.getElementById("main-menu");
-const characterSelection = document.getElementById("character-selection");
 const gameArea = document.getElementById("game-area");
 const freestyleButton = document.getElementById("freestyle-button");
 const challengeButton = document.getElementById("challenge-button");
-const backToModeButton = document.getElementById("back-to-mode");
-const characterOptions = document.querySelectorAll(".character-option");
 const nails = document.querySelectorAll(".nail");
 const challengeUI = document.getElementById("challenge-ui");
 const referenceImage = document.getElementById("reference-image");
