@@ -22,7 +22,9 @@ const gameState = {
         skinTone: 'skin02', // default skin tone
         hairStyle: 'bun', // default hair style
         eyeColor: 'brown', // default eye color
-    }
+    },
+    bgMusic: null, // Background music element
+    isMusicPlaying: false // Track if music is playing
 };
 
 // Character customization options
@@ -84,6 +86,8 @@ function selectToolOption(categoryId, value) {
 function initGame() {
     createToolsPanel();
     setupEventListeners();
+    initBackgroundMusic();
+    playBackgroundMusic(); // Start playing music when game initializes
 }
 
 // Play mouse click sound
@@ -358,8 +362,10 @@ function startGame(mode) {
     resetDesign();
 
     if (mode === "challenge") {
+        pauseBackgroundMusic(); // Pause music in challenge mode
         startChallengeMode();
     } else {
+        playBackgroundMusic(); // Play music in freestyle mode
         challengeUI.style.display = "none";
     }
 }
@@ -502,6 +508,9 @@ function returnToMainMenu() {
     gameState.activeToolCategory = null;
     gameState.currentMode = null;
     gameState.selectedCharacter = null;
+    
+    // Resume background music when returning to main menu
+    playBackgroundMusic();
 }
 
 // Complete design (done button clicked)
@@ -920,5 +929,28 @@ function toggleCategoryOptions(categoryId) {
 
             optionsContainer.appendChild(optionElement);
         });
+    }
+}
+
+// Initialize background music
+function initBackgroundMusic() {
+    gameState.bgMusic = new Audio('sound/bgm-light.mp3');
+    gameState.bgMusic.loop = true;
+    gameState.bgMusic.volume = 0.5; // Set volume to 50%
+}
+
+// Play background music
+function playBackgroundMusic() {
+    if (gameState.bgMusic && !gameState.isMusicPlaying) {
+        gameState.bgMusic.play();
+        gameState.isMusicPlaying = true;
+    }
+}
+
+// Pause background music
+function pauseBackgroundMusic() {
+    if (gameState.bgMusic && gameState.isMusicPlaying) {
+        gameState.bgMusic.pause();
+        gameState.isMusicPlaying = false;
     }
 }
