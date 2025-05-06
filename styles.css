@@ -134,10 +134,10 @@ h1 {
 }
 
 #character-selection h1 {
-    font-size: 48px;
-    color: #ff6b9a;
+    width: 1000px;
+    height: auto;
     margin-bottom: 30px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    content: url("img/choose_character.png");
 }
 
 /* Game Area */
