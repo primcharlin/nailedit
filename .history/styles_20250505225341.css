@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Starbim", sans-serif;
+    font-family: "Lexend", sans-serif;
 }
 
 body {
@@ -48,7 +48,6 @@ h1 {
     color: #ff6b9a;
     margin-bottom: 50px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-    font-family: "Starbim", sans-serif;
 }
 
 .logo {
@@ -73,52 +72,12 @@ h1 {
     cursor: pointer;
     transition: all 0.3s ease;
     width: 300px;
-    position: relative;
 }
 
 #main-menu button:hover {
-    background-color: #e12561;
-    transform: scale(1.1);
-}
-
-#main-menu button[data-text="Challenge"]::before,
-#main-menu button[data-text="Challenge"]::after {
-    content: none;
-}
-
-#challenge-button {
-    background-color: #ff6b9a;
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    margin: 10px;
-    font-size: 24px;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    width: 300px;
-    position: relative;
-}
-
-#challenge-button:hover {
-    background-color: #881338;
+    background-color: #ff4d85;
     transform: scale(1.05);
 }
-
-.star-icon {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
-    margin: 0 3px;
-}
-
-#challenge-button span {
-    font-family: "Starbim", sans-serif;
-    font-size: 24px;
-    color: #fff;
-    text-shadow: 2px 2px 0 #ff6b9a, 0 2px 4px rgba(0,0,0,0.10);
-}
-
 
 /* Character Selection */
 #character-selection {
@@ -669,4 +628,3 @@ h1 {
 #back-to-mode:hover {
     background-color: #ff4d8a;
 }
-
