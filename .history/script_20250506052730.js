@@ -18,8 +18,7 @@ const gameState = {
     challengeReference: null, // Stores reference design for challenge mode
     activeToolCategory: null, // Keep track of the active tool category
     characterCustomization: {
-        name: '', // character name
-        skinTone: 'skin01', // default skin tone
+        skinTone: 'light', // default skin tone
         hairStyle: 'long', // default hair style
         eyeColor: 'brown', // default eye color
     }
@@ -28,10 +27,12 @@ const gameState = {
 // Character customization options
 const characterCustomization = {
     skinTones: [
-        { id: 'skin01', name: 'Light' },
-        { id: 'skin02', name: 'Medium Light' },
-        { id: 'skin03', name: 'Medium Dark' },
-        { id: 'skin04', name: 'Dark' }
+        { id: 'light', name: 'Light' },
+        { id: 'fair', name: 'Fair' },
+        { id: 'medium', name: 'Medium' },
+        { id: 'olive', name: 'Olive' },
+        { id: 'tan', name: 'Tan' },
+        { id: 'dark', name: 'Dark' }
     ],
     hairStyles: [
         { id: 'bun', name: 'Bun' },
@@ -136,159 +137,6 @@ function showCharacterSelection(mode) {
     gameState.currentMode = mode;
     mainMenu.style.display = "none";
     characterSelection.style.display = "flex";
-
-    // Add customization option if it doesn't exist
-    let characterGrid = document.querySelector('.character-grid');
-    if (!document.querySelector('.custom-character-option')) {
-        const customOption = document.createElement('div');
-        customOption.className = 'character-option custom-character-option';
-        customOption.innerHTML = `
-            <img src="img/avatar_skin01-long-brown.png" alt="Custom Character">
-            <p>Create Custom</p>
-        `;
-        characterGrid.appendChild(customOption);
-
-        // Add click event for custom character option
-        customOption.addEventListener('click', () => {
-            document.querySelector('.character-grid').style.display = 'none';
-            document.querySelector('.character-customization').style.display = 'flex';
-        });
-
-        // Create customization UI if it doesn't exist
-        if (!document.querySelector('.character-customization')) {
-            const customizationUI = document.createElement('div');
-            customizationUI.className = 'character-customization';
-            customizationUI.style.display = 'none';
-            customizationUI.innerHTML = `
-                <h2>Customize Your Character</h2>
-                <div class="customization-preview">
-                    <img id="character-preview" src="img/avatar_skin01-long-brown.png" alt="Character Preview">
-                </div>
-                <div class="name-input-container">
-                    <h3>Character Name</h3>
-                    <input type="text" id="character-name" placeholder="Enter character name" maxlength="20">
-                </div>
-                <div class="customization-options">
-                    <div class="option-group">
-                        <h3>Skin Tone</h3>
-                        <div class="options-row" id="skin-options">
-                            ${characterCustomization.skinTones.map(skin => `
-                                <button class="option-btn ${skin.id === gameState.characterCustomization.skinTone ? 'selected' : ''}" 
-                                        data-type="skinTone" 
-                                        data-value="${skin.id}">
-                                    ${skin.name}
-                                </button>
-                            `).join('')}
-                        </div>
-                    </div>
-                    <div class="option-group">
-                        <h3>Hair Style</h3>
-                        <div class="options-row" id="hair-options">
-                            ${characterCustomization.hairStyles.map(hair => `
-                                <button class="option-btn ${hair.id === gameState.characterCustomization.hairStyle ? 'selected' : ''}" 
-                                        data-type="hairStyle" 
-                                        data-value="${hair.id}">
-                                    ${hair.name}
-                                </button>
-                            `).join('')}
-                        </div>
-                    </div>
-                    <div class="option-group">
-                        <h3>Eye Color</h3>
-                        <div class="options-row" id="eye-options">
-                            ${characterCustomization.eyeColors.map(eye => `
-                                <button class="option-btn ${eye.id === gameState.characterCustomization.eyeColor ? 'selected' : ''}" 
-                                        data-type="eyeColor" 
-                                        data-value="${eye.id}">
-                                    ${eye.name}
-                                </button>
-                            `).join('')}
-                        </div>
-                    </div>
-                </div>
-                <div class="customization-buttons">
-                    <button id="back-to-characters" class="secondary-btn">Back</button>
-                    <button id="create-character" class="create-btn">Create Character</button>
-                </div>
-            `;
-            characterSelection.appendChild(customizationUI);
-
-            // Add event listeners for customization options
-            setupCustomizationListeners();
-
-            // Add back button listener
-            document.getElementById('back-to-characters').addEventListener('click', () => {
-                document.querySelector('.character-customization').style.display = 'none';
-                document.querySelector('.character-grid').style.display = 'grid';
-            });
-
-            // Add name input listener
-            document.getElementById('character-name').addEventListener('input', (e) => {
-                gameState.characterCustomization.name = e.target.value;
-            });
-        }
-    }
-}
-
-// Setup customization event listeners
-function setupCustomizationListeners() {
-    const optionButtons = document.querySelectorAll('.option-btn');
-    optionButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            const type = e.target.dataset.type;
-            const value = e.target.dataset.value;
-            
-            // Update selected state in UI
-            document.querySelectorAll(`[data-type="${type}"]`).forEach(btn => {
-                btn.classList.remove('selected');
-            });
-            e.target.classList.add('selected');
-            
-            // Update game state
-            gameState.characterCustomization[type] = value;
-            
-            // Update preview image
-            updateCharacterPreview();
-        });
-    });
-
-    // Create character button
-    const createButton = document.getElementById('create-character');
-    createButton.addEventListener('click', () => {
-        selectCustomCharacter();
-    });
-}
-
-// Update character preview based on current customization
-function updateCharacterPreview() {
-    const { skinTone, hairStyle, eyeColor } = gameState.characterCustomization;
-    const previewImg = document.getElementById('character-preview');
-    previewImg.src = `img/avatar_${skinTone}-${hairStyle}-${eyeColor}.png`;
-}
-
-// Handle custom character selection
-function selectCustomCharacter() {
-    const { name, skinTone, hairStyle, eyeColor } = gameState.characterCustomization;
-    
-    // Validate name
-    if (!name.trim()) {
-        alert('Please enter a character name');
-        return;
-    }
-    
-    gameState.selectedCharacter = 'custom';
-    characterSelection.style.display = "none";
-
-    // Display the customized character in the game area
-    const characterDisplay = document.getElementById("character-display");
-    characterDisplay.innerHTML = `
-        <div class="character-container">
-            <img src="img/avatar_${skinTone}-${hairStyle}-${eyeColor}.png" alt="Custom Character">
-            <p class="character-name">${name}</p>
-        </div>
-    `;
-
-    startGame(gameState.currentMode);
 }
 
 // Handle character selection
