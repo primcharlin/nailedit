@@ -19,8 +19,8 @@ const gameState = {
     activeToolCategory: null, // Keep track of the active tool category
     characterCustomization: {
         name: '', // character name
-        skinTone: 'skin01', // default skin tone
-        hairStyle: 'long', // default hair style
+        skinTone: 'skin02', // default skin tone
+        hairStyle: 'bun', // default hair style
         eyeColor: 'brown', // default eye color
     }
 };
