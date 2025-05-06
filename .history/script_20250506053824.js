@@ -18,7 +18,6 @@ const gameState = {
     challengeReference: null, // Stores reference design for challenge mode
     activeToolCategory: null, // Keep track of the active tool category
     characterCustomization: {
-        name: '', // character name
         skinTone: 'skin01', // default skin tone
         hairStyle: 'long', // default hair style
         eyeColor: 'brown', // default eye color
@@ -164,10 +163,6 @@ function showCharacterSelection(mode) {
                 <div class="customization-preview">
                     <img id="character-preview" src="img/avatar_skin01-long-brown.png" alt="Character Preview">
                 </div>
-                <div class="name-input-container">
-                    <h3>Character Name</h3>
-                    <input type="text" id="character-name" placeholder="Enter character name" maxlength="20">
-                </div>
                 <div class="customization-options">
                     <div class="option-group">
                         <h3>Skin Tone</h3>
@@ -221,11 +216,6 @@ function showCharacterSelection(mode) {
                 document.querySelector('.character-customization').style.display = 'none';
                 document.querySelector('.character-grid').style.display = 'grid';
             });
-
-            // Add name input listener
-            document.getElementById('character-name').addEventListener('input', (e) => {
-                gameState.characterCustomization.name = e.target.value;
-            });
         }
     }
 }
@@ -268,25 +258,13 @@ function updateCharacterPreview() {
 
 // Handle custom character selection
 function selectCustomCharacter() {
-    const { name, skinTone, hairStyle, eyeColor } = gameState.characterCustomization;
-    
-    // Validate name
-    if (!name.trim()) {
-        alert('Please enter a character name');
-        return;
-    }
-    
+    const { skinTone, hairStyle, eyeColor } = gameState.characterCustomization;
     gameState.selectedCharacter = 'custom';
     characterSelection.style.display = "none";
 
     // Display the customized character in the game area
     const characterDisplay = document.getElementById("character-display");
-    characterDisplay.innerHTML = `
-        <div class="character-container">
-            <img src="img/avatar_${skinTone}-${hairStyle}-${eyeColor}.png" alt="Custom Character">
-            <p class="character-name">${name}</p>
-        </div>
-    `;
+    characterDisplay.innerHTML = `<img src="img/avatar_${skinTone}-${hairStyle}-${eyeColor}.png" alt="Custom Character">`;
 
     startGame(gameState.currentMode);
 }
