@@ -103,6 +103,12 @@ function setupEventListeners() {
         resultModal.style.display = "none";
         returnToMainMenu();
     });
+
+    // Corner reset button
+    const cornerResetButton = document.getElementById("corner-reset-button");
+    if (cornerResetButton) {
+        cornerResetButton.addEventListener("click", resetDesign);
+    }
 }
 
 // Show character selection screen
@@ -210,26 +216,159 @@ function applyDesign(nail) {
     const nailId = nail.id.split("-")[1];
 
     if (gameState.selectedColor) {
+        // Remove any decoration classes
+        nail.classList.forEach((className) => {
+            if (
+                className.startsWith("pattern-") ||
+                className.startsWith("glitter-")
+            ) {
+                nail.classList.remove(className);
+            }
+        });
+        // Clear any gradient
+        nail.style.background = "";
+        // Apply the color
         nail.style.backgroundColor = gameState.selectedColor;
         gameState.nailDesigns[nailId].color = gameState.selectedColor;
     }
 
+    // Handle fancy color gradients
+    if (
+        gameState.selectedDecoration === "fancyColor1" ||
+        gameState.selectedDecoration === "fancyColor2" ||
+        gameState.selectedDecoration === "fancyColor3" ||
+        gameState.selectedDecoration === "fancyColor4" ||
+        gameState.selectedDecoration === "fancyColor5"
+    ) {
+        let gradient = "";
+        switch (gameState.selectedDecoration) {
+            case "fancyColor1":
+                gradient = "linear-gradient(90deg, #a89877, #c2b7a4, #e7ded7, #948a6c, #e1d4c1, #b2a289, #b4a491)";
+                break;
+            case "fancyColor2":
+                gradient = "linear-gradient(90deg, #5f5f5f, #bcbcbc, #bcbcbc, #e9e9e9, #bcbcbc, #5f5f5f)";
+                break;
+            case "fancyColor3":
+                gradient = "linear-gradient(90deg, #0d1533, #18274c, #005397, #1670b9, #005397, #18274c, #0d1533)";
+                break;
+            case "fancyColor4":
+                gradient = "linear-gradient(90deg, #2f0925, #4e183e, #64255b, #4e183e, #2f0925)";
+                break;
+            case "fancyColor5":
+                gradient = "linear-gradient(90deg, #98a0c1, #97a4bf, #c5b2d1, #e5d1e5, #c5b2d1, #97a4bf, #98a0c1)";
+                break;
+        }
+        nail.style.background = gradient;
+        nail.style.backgroundColor = "";
+        gameState.nailDesigns[nailId].color = gradient;
+    }
+
     if (gameState.selectedDecoration) {
-        // Remove any existing decoration classes
+        // Remove any existing pattern or glitter classes
         nail.classList.forEach((className) => {
             if (
                 className.startsWith("pattern-") ||
-                className.startsWith("glitter-") ||
-                className.startsWith("sticker-") ||
-                className.startsWith("gem-")
+                className.startsWith("glitter-")
             ) {
                 nail.classList.remove(className);
             }
         });
 
-        // Add the new decoration class
-        nail.classList.add(gameState.selectedDecoration);
-        gameState.nailDesigns[nailId].decoration = gameState.selectedDecoration;
+        // Handle stickers and gems
+        if (gameState.selectedDecoration.startsWith('sticker-') || gameState.selectedDecoration.startsWith('gem')) {
+            // Get click position relative to the nail
+            const rect = nail.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            // Create new sticker or gem element
+            let element;
+            if (gameState.selectedDecoration.startsWith('sticker-')) {
+                element = document.createElement('img');
+                element.className = 'applied-sticker-img';
+            } else {
+                element = document.createElement('img');
+                element.className = 'applied-gem-img';
+            }
+            
+            // Set the image source based on the decoration type
+            if (gameState.selectedDecoration === 'sticker-heart') {
+                element.src = 'img/Sticker1.png';
+                element.alt = 'Heart Sticker';
+            } else if (gameState.selectedDecoration === 'sticker-diamond') {
+                element.src = 'img/Sticker3.png';
+                element.alt = 'Diamond Sticker';
+            } else if (gameState.selectedDecoration === 'sticker-star') {
+                element.className = 'applied-sticker-img sticker-star';
+                element.alt = 'Star Sticker';
+            } else if (gameState.selectedDecoration === 'sticker-flower') {
+                element.className = 'applied-sticker-img sticker-flower';
+                element.alt = 'Flower Sticker';
+            } else if (gameState.selectedDecoration === 'sticker-butterfly') {
+                element.className = 'applied-sticker-img sticker-butterfly';
+                element.alt = 'Butterfly Sticker';
+            } else if (gameState.selectedDecoration === 'gem1') {
+                element.src = 'img/Gems1.png';
+                element.alt = 'Gem 1';
+            } else if (gameState.selectedDecoration === 'gem2') {
+                element.src = 'img/Gems2.png';
+                element.alt = 'Gem 2';
+            } else if (gameState.selectedDecoration === 'gem3') {
+                element.src = 'img/Gems3.png';
+                element.alt = 'Gem 3';
+            } else if (gameState.selectedDecoration === 'gem4') {
+                element.src = 'img/Gems4.png';
+                element.alt = 'Gem 4';
+            }
+
+            // Position the element at the click location
+            element.style.position = 'absolute';
+            element.style.left = `${x}px`;
+            element.style.top = `${y}px`;
+            element.style.transform = 'translate(-50%, -50%)';
+
+            // Add the element to the nail
+            nail.appendChild(element);
+
+            // Store the decoration in the game state
+            if (!gameState.nailDesigns[nailId].decorations) {
+                gameState.nailDesigns[nailId].decorations = [];
+            }
+            gameState.nailDesigns[nailId].decorations.push({
+                type: gameState.selectedDecoration,
+                x: x,
+                y: y
+            });
+        } else {
+            // Handle other decorations (patterns, etc.)
+            // Clear any existing background styles
+            nail.style.background = '';
+            nail.style.backgroundColor = '';
+            
+            if (gameState.selectedDecoration === 'pattern-coffee-leopard') {
+                // Create an image element for the leopard pattern
+                const patternImg = document.createElement('img');
+                patternImg.src = 'img/Patterns1.png';
+                patternImg.className = 'pattern-img';
+                patternImg.style.position = 'absolute';
+                patternImg.style.width = '100%';
+                patternImg.style.height = '100%';
+                patternImg.style.objectFit = 'cover';
+                patternImg.style.top = '0';
+                patternImg.style.left = '0';
+                
+                // Remove any existing pattern images
+                const existingPatterns = nail.querySelectorAll('.pattern-img');
+                existingPatterns.forEach(p => p.remove());
+                
+                // Add the new pattern image
+                nail.appendChild(patternImg);
+            } else {
+                // Handle other patterns normally
+                nail.classList.add(gameState.selectedDecoration);
+            }
+            gameState.nailDesigns[nailId].decoration = gameState.selectedDecoration;
+        }
     }
 }
 
@@ -251,6 +390,12 @@ function resetDesign() {
                 nail.classList.remove(className);
             }
         });
+
+        // Remove all sticker and gem images
+        const stickers = nail.querySelectorAll('.applied-sticker-img');
+        stickers.forEach(sticker => sticker.remove());
+        const gems = nail.querySelectorAll('.applied-gem-img');
+        gems.forEach(gem => gem.remove());
 
         gameState.nailDesigns[nailId] = {};
     });
@@ -358,33 +503,39 @@ const toolCategories = [
         options: [
             {
                 id: "baseColor1",
-                value: "#FF0000",
+                value: "#e83f29",
                 display:
-                    '<div class="color-preview" style="background-color: #FF0000;"></div>',
+                    '<div class="color-preview" style="background-color: #e83f29;"></div>',
             },
             {
                 id: "baseColor2",
-                value: "#FFA500",
+                value: "#ed7235",
                 display:
-                    '<div class="color-preview" style="background-color: #FFA500;"></div>',
+                    '<div class="color-preview" style="background-color: #ed7235;"></div>',
             },
             {
                 id: "baseColor3",
-                value: "#FFFF00",
+                value: "#fff143",
                 display:
-                    '<div class="color-preview" style="background-color: #FFFF00;"></div>',
+                    '<div class="color-preview" style="background-color: #fff143;"></div>',
             },
             {
                 id: "baseColor4",
-                value: "#00FF00",
+                value: "#aed03b",
                 display:
-                    '<div class="color-preview" style="background-color: #00FF00;"></div>',
+                    '<div class="color-preview" style="background-color: #aed03b;"></div>',
             },
             {
                 id: "baseColor5",
-                value: "#0000FF",
+                value: "#9ac4e9",
                 display:
-                    '<div class="color-preview" style="background-color: #0000FF;"></div>',
+                    '<div class="color-preview" style="background-color: #9ac4e9;"></div>',
+            },
+            {
+                id: "baseColor6",
+                value: "#000000",
+                display:
+                    '<div class="color-preview" style="background-color: #000000;"></div>',
             },
         ],
     },
@@ -426,34 +577,34 @@ const toolCategories = [
         ],
     },
     {
-        id: "glitterColors",
-        name: "Glitter",
-        icon: '<svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 3L13.5 8.5H19L14.5 12L16 17.5L12 14L8 17.5L9.5 12L5 8.5H10.5L12 3Z" fill="#FFD700"/></svg>',
+        id: "fancyColors",
+        name: "Fancy Color",
+        icon: '<svg viewBox="0 0 24 24" width="24" height="24"><defs><linearGradient id="fancy1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#a89877"/><stop offset="16%" stop-color="#c2b7a4"/><stop offset="32%" stop-color="#e7ded7"/><stop offset="48%" stop-color="#948a6c"/><stop offset="64%" stop-color="#e1d4c1"/><stop offset="80%" stop-color="#b2a289"/><stop offset="100%" stop-color="#b4a491"/></linearGradient></defs><circle cx="12" cy="12" r="10" fill="url(#fancy1)"/></svg>',
         options: [
             {
-                id: "glitter1",
-                value: "glitter-gold",
-                display: '<div class="deco-preview glitter-gold"></div>',
+                id: "fancyColor1",
+                value: "fancyColor1",
+                display: '<div class="color-preview" style="background: linear-gradient(90deg, #a89877, #c2b7a4, #e7ded7, #948a6c, #e1d4c1, #b2a289, #b4a491);"></div>',
             },
             {
-                id: "glitter2",
-                value: "glitter-silver",
-                display: '<div class="deco-preview glitter-silver"></div>',
+                id: "fancyColor2",
+                value: "fancyColor2",
+                display: '<div class="color-preview" style="background: linear-gradient(90deg, #5f5f5f, #bcbcbc, #bcbcbc, #e9e9e9, #bcbcbc, #5f5f5f);"></div>',
             },
             {
-                id: "glitter3",
-                value: "glitter-rainbow",
-                display: '<div class="deco-preview glitter-rainbow"></div>',
+                id: "fancyColor3",
+                value: "fancyColor3",
+                display: '<div class="color-preview" style="background: linear-gradient(90deg, #0d1533, #18274c, #005397, #1670b9, #005397, #18274c, #0d1533);"></div>',
             },
             {
-                id: "glitter4",
-                value: "glitter-blue",
-                display: '<div class="deco-preview glitter-blue"></div>',
+                id: "fancyColor4",
+                value: "fancyColor4",
+                display: '<div class="color-preview" style="background: linear-gradient(90deg, #2f0925, #4e183e, #64255b, #4e183e, #2f0925);"></div>',
             },
             {
-                id: "glitter5",
-                value: "glitter-pink",
-                display: '<div class="deco-preview glitter-pink"></div>',
+                id: "fancyColor5",
+                value: "fancyColor5",
+                display: '<div class="color-preview" style="background: linear-gradient(90deg, #98a0c1, #97a4bf, #c5b2d1, #e5d1e5, #c5b2d1, #97a4bf, #98a0c1);"></div>',
             },
         ],
     },
@@ -470,22 +621,22 @@ const toolCategories = [
             {
                 id: "pattern2",
                 value: "pattern-dots",
-                display: '<div class="deco-preview pattern-dots"></div>',
+                display: '<img src="img/Patterns2.png" alt="Dots Pattern" class="deco-preview" />',
             },
             {
                 id: "pattern3",
-                value: "pattern-zigzag",
-                display: '<div class="deco-preview pattern-zigzag"></div>',
+                value: "pattern-coffee-leopard",
+                display: '<img src="img/Patterns1.png" alt="Coffee Leopard Print" class="deco-preview" />',
             },
             {
                 id: "pattern4",
-                value: "pattern-leopard",
-                display: '<div class="deco-preview pattern-leopard"></div>',
+                value: "pattern-flowers",
+                display: '<img src="img/Patterns3.png" alt="Flowers Pattern" class="deco-preview" />',
             },
             {
                 id: "pattern5",
-                value: "pattern-marble",
-                display: '<div class="deco-preview pattern-marble"></div>',
+                value: "pattern-plaid",
+                display: '<img src="img/Patterns4.png" alt="Plaid Pattern" class="deco-preview" />',
             },
         ],
     },
@@ -497,7 +648,7 @@ const toolCategories = [
             {
                 id: "sticker1",
                 value: "sticker-heart",
-                display: '<div class="deco-preview sticker-heart"></div>',
+                display: '<img src="img/Sticker1.png" alt="Heart Sticker" class="deco-preview sticker-img" />',
             },
             {
                 id: "sticker2",
@@ -517,7 +668,7 @@ const toolCategories = [
             {
                 id: "sticker5",
                 value: "sticker-diamond",
-                display: '<div class="deco-preview sticker-diamond"></div>',
+                display: '<img src="img/Sticker3.png" alt="Diamond Sticker" class="deco-preview sticker-img" />',
             },
         ],
     },
@@ -528,28 +679,23 @@ const toolCategories = [
         options: [
             {
                 id: "gem1",
-                value: "gem-round",
-                display: '<div class="deco-preview gem-round"></div>',
+                value: "gem1",
+                display: '<img src="img/Gems1.png" alt="Gem 1" class="deco-preview gem-img" />',
             },
             {
                 id: "gem2",
-                value: "gem-square",
-                display: '<div class="deco-preview gem-square"></div>',
+                value: "gem2",
+                display: '<img src="img/Gems2.png" alt="Gem 2" class="deco-preview gem-img" />',
             },
             {
                 id: "gem3",
-                value: "gem-teardrop",
-                display: '<div class="deco-preview gem-teardrop"></div>',
+                value: "gem3",
+                display: '<img src="img/Gems3.png" alt="Gem 3" class="deco-preview gem-img" />',
             },
             {
                 id: "gem4",
-                value: "gem-heart",
-                display: '<div class="deco-preview gem-heart"></div>',
-            },
-            {
-                id: "gem5",
-                value: "gem-star",
-                display: '<div class="deco-preview gem-star"></div>',
+                value: "gem4",
+                display: '<img src="img/Gems4.png" alt="Gem 4" class="deco-preview gem-img" />',
             },
         ],
     },
