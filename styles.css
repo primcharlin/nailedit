@@ -353,6 +353,7 @@ h1 {
     cursor: pointer;
     z-index: 5;
     transition: all 0.2s ease;
+    overflow: hidden;
 }
 
 #nail-1,
@@ -435,14 +436,11 @@ h1 {
     background-size: 20px 20px;
 }
 .pattern-leopard {
-    background-image: radial-gradient(
-        ellipse,
-        #000000 0%,
-        #000000 30%,
-        transparent 30%
-    );
-    background-size: 30px 30px;
-    background-repeat: repeat;
+    background-image: url('img/Patterns1.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
 }
 .pattern-marble {
     background-image: linear-gradient(
@@ -452,45 +450,86 @@ h1 {
         ),
         linear-gradient(120deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3));
 }
-
-.sticker-heart:after {
-    content: "❤";
-    font-size: 40px;
-    color: red;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+.pattern-coffee-leopard {
+    background-color: #8B4513;
+    background-image: radial-gradient(
+        ellipse at center,
+        #D2691E 0%,
+        #D2691E 30%,
+        transparent 30%
+    );
+    background-size: 20px 20px;
+    background-repeat: repeat;
 }
+.pattern-flowers {
+    background-color: #FFB6C1;
+    background-image: 
+        radial-gradient(circle at 25% 25%, #FF69B4 0%, #FF69B4 20%, transparent 20%),
+        radial-gradient(circle at 75% 25%, #FF69B4 0%, #FF69B4 20%, transparent 20%),
+        radial-gradient(circle at 25% 75%, #FF69B4 0%, #FF69B4 20%, transparent 20%),
+        radial-gradient(circle at 75% 75%, #FF69B4 0%, #FF69B4 20%, transparent 20%);
+    background-size: 40px 40px;
+    background-repeat: repeat;
+}
+.pattern-plaid {
+    background-color: #FFB6C1;
+    background-image: 
+        linear-gradient(45deg, #000000 25%, transparent 25%),
+        linear-gradient(-45deg, #000000 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #000000 75%),
+        linear-gradient(-45deg, transparent 75%, #000000 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+.pattern-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    border-radius: 36px 36px 0 0;
+}
+
+.sticker-heart:after,
+.sticker-diamond:after {
+    display: none !important;
+}
+
+.applied-sticker-img {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    pointer-events: none;
+    z-index: 10;
+    object-fit: contain;
+}
+
 .sticker-star:after {
     content: "★";
-    font-size: 40px;
+    font-size: 30px;
     color: gold;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
 }
+
 .sticker-flower:after {
     content: "✿";
-    font-size: 40px;
+    font-size: 30px;
     color: #ff6b9a;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
 }
+
 .sticker-butterfly:after {
     content: "🦋";
-    font-size: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-}
-.sticker-diamond:after {
-    content: "💎";
-    font-size: 40px;
+    font-size: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
