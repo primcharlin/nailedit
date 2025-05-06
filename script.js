@@ -86,26 +86,38 @@ function initGame() {
     setupEventListeners();
 }
 
+// Play mouse click sound
+function playClickSound() {
+    const clickSound = new Audio('sound/mouse_click.mp3');
+    clickSound.play();
+}
+
 // Setup event listeners
 function setupEventListeners() {
     // Mode selection
-    freestyleButton.addEventListener("click", () =>
-        showCharacterSelection("freestyle")
-    );
-    challengeButton.addEventListener("click", () =>
-        showCharacterSelection("challenge")
-    );
+    freestyleButton.addEventListener("click", () => {
+        playClickSound();
+        showCharacterSelection("freestyle");
+    });
+    challengeButton.addEventListener("click", () => {
+        playClickSound();
+        showCharacterSelection("challenge");
+    });
 
     // Character selection
     characterOptions.forEach((option) => {
         option.addEventListener("click", () => {
+            playClickSound();
             const characterId = option.dataset.character;
             selectCharacter(characterId);
         });
     });
 
     // Back button
-    backToModeButton.addEventListener("click", returnToModeSelection);
+    backToModeButton.addEventListener("click", () => {
+        playClickSound();
+        returnToModeSelection();
+    });
 
     // Nail selection
     nails.forEach((nail) => {
@@ -115,17 +127,28 @@ function setupEventListeners() {
     });
 
     // Control buttons
-    resetButton.addEventListener("click", resetDesign);
-    backButton.addEventListener("click", returnToMainMenu);
-    doneButton.addEventListener("click", completeDesign);
+    resetButton.addEventListener("click", () => {
+        playClickSound();
+        resetDesign();
+    });
+    backButton.addEventListener("click", () => {
+        playClickSound();
+        returnToMainMenu();
+    });
+    doneButton.addEventListener("click", () => {
+        playClickSound();
+        completeDesign();
+    });
 
     // Modal buttons
     tryAgainButton.addEventListener("click", () => {
+        playClickSound();
         resultModal.style.display = "none";
         startGame("challenge");
     });
 
     menuButton.addEventListener("click", () => {
+        playClickSound();
         resultModal.style.display = "none";
         returnToMainMenu();
     });
@@ -218,6 +241,7 @@ function showCharacterSelection(mode) {
 
             // Add back button listener
             document.getElementById('back-to-characters').addEventListener('click', () => {
+                playClickSound();
                 document.querySelector('.character-customization').style.display = 'none';
                 document.querySelector('.character-grid').style.display = 'grid';
             });
@@ -235,6 +259,7 @@ function setupCustomizationListeners() {
     const optionButtons = document.querySelectorAll('.option-btn');
     optionButtons.forEach(button => {
         button.addEventListener('click', (e) => {
+            playClickSound();
             const type = e.target.dataset.type;
             const value = e.target.dataset.value;
             
@@ -255,7 +280,15 @@ function setupCustomizationListeners() {
     // Create character button
     const createButton = document.getElementById('create-character');
     createButton.addEventListener('click', () => {
+        playClickSound();
         selectCustomCharacter();
+    });
+
+    // Add back button listener
+    document.getElementById('back-to-characters').addEventListener('click', () => {
+        playClickSound();
+        document.querySelector('.character-customization').style.display = 'none';
+        document.querySelector('.character-grid').style.display = 'grid';
     });
 }
 
@@ -815,6 +848,7 @@ function createToolsPanel() {
 
         // Add click event to show options for this category
         categoryButton.addEventListener("click", () => {
+            playClickSound();
             toggleCategoryOptions(category.id);
         });
 
@@ -834,6 +868,7 @@ function createToolsPanel() {
 
 // Toggle options for a category
 function toggleCategoryOptions(categoryId) {
+    playClickSound();
     const optionsContainer = document.getElementById("options-container");
     const allCategoryButtons = document.querySelectorAll(".category-button");
 
@@ -879,6 +914,7 @@ function toggleCategoryOptions(categoryId) {
 
             // Add click event for this option
             optionElement.addEventListener("click", () => {
+                playClickSound();
                 selectToolOption(categoryId, option.value);
             });
 
