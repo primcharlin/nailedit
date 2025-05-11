@@ -1,3 +1,10 @@
+@font-face {
+    font-family: 'Starbim';
+    src: url('fonts/Starbim.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -239,12 +246,18 @@ h1 {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .category-name {
     font-size: 12px;
     text-align: center;
     color: #333;
+    width: 100%;
 }
 
 .options-container {
@@ -720,7 +733,9 @@ h1 {
 }
 
 .custom-character-option:hover {
-    background-color: rgba(255, 107, 154, 0.1) !important;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 107, 154, 0.3);
+    background-color: rgba(255, 255, 255, 0.95) !important;
 }
 
 .custom-character-option p {
