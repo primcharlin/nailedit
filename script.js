@@ -393,10 +393,10 @@ function startGame(mode) {
     resetDesign();
 
     if (mode === "challenge") {
-        pauseBackgroundMusic(); // Pause music in challenge mode
         startChallengeMode();
+        playBackgroundMusic(); // Play challenge music
     } else {
-        playBackgroundMusic(); // Play music in freestyle mode
+        playBackgroundMusic(); // Play light music
         challengeUI.style.display = "none";
     }
 }
@@ -1105,34 +1105,53 @@ function toggleCategoryOptions(categoryId) {
 
 // Initialize background music
 function initBackgroundMusic() {
-    gameState.bgMusic = new Audio('sound/bgm-light.mp3');
-    gameState.bgMusic.loop = true;
-    gameState.bgMusic.volume = 0.5; // Set volume to 50%
+    // Initialize both music tracks
+    gameState.bgMusic = {
+        light: new Audio('sound/bgm-light.mp3'),
+        challenge: new Audio('sound/bgm-challenge.mp3')
+    };
     
-    // Add event listener for when audio can play
-    gameState.bgMusic.addEventListener('canplaythrough', () => {
-        // Music is ready to play, but we'll wait for user interaction
-        console.log('Background music loaded and ready to play');
+    // Set properties for both tracks
+    Object.values(gameState.bgMusic).forEach(music => {
+        music.loop = true;
+        music.volume = 0.5; // Set volume to 50%
     });
     
-    // Add error handling
-    gameState.bgMusic.addEventListener('error', (e) => {
-        console.error('Error loading background music:', e);
+    // Add event listeners for when audio can play
+    Object.entries(gameState.bgMusic).forEach(([type, music]) => {
+        music.addEventListener('canplaythrough', () => {
+            console.log(`${type} background music loaded and ready to play`);
+        });
+        
+        music.addEventListener('error', (e) => {
+            console.error(`Error loading ${type} background music:`, e);
+        });
     });
 }
 
 // Play background music
 function playBackgroundMusic() {
-    if (gameState.bgMusic && !gameState.isMusicPlaying) {
-        gameState.bgMusic.play();
-        gameState.isMusicPlaying = true;
+    if (!gameState.bgMusic) return;
+    
+    // Stop all music first
+    pauseBackgroundMusic();
+    
+    // Play the appropriate music based on game mode
+    if (gameState.currentMode === 'challenge') {
+        gameState.bgMusic.challenge.play();
+    } else {
+        gameState.bgMusic.light.play();
     }
+    gameState.isMusicPlaying = true;
 }
 
 // Pause background music
 function pauseBackgroundMusic() {
-    if (gameState.bgMusic && gameState.isMusicPlaying) {
-        gameState.bgMusic.pause();
-        gameState.isMusicPlaying = false;
-    }
+    if (!gameState.bgMusic) return;
+    
+    // Pause all music tracks
+    Object.values(gameState.bgMusic).forEach(music => {
+        music.pause();
+    });
+    gameState.isMusicPlaying = false;
 }
