@@ -88,6 +88,31 @@ function initGame() {
     setupEventListeners();
     initBackgroundMusic();
     playBackgroundMusic(); // Start playing music when game initializes
+    initCustomCursor(); // Initialize custom cursor
+}
+
+// Initialize custom cursor
+function initCustomCursor() {
+    // Create cursor element
+    const cursor = document.createElement('div');
+    cursor.className = 'custom-cursor';
+    document.body.appendChild(cursor);
+
+    // Update cursor position on mouse move
+    document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+    });
+
+    // Hide cursor when mouse leaves window
+    document.addEventListener('mouseleave', () => {
+        cursor.style.display = 'none';
+    });
+
+    // Show cursor when mouse enters window
+    document.addEventListener('mouseenter', () => {
+        cursor.style.display = 'block';
+    });
 }
 
 // Play mouse click sound
@@ -1083,6 +1108,17 @@ function initBackgroundMusic() {
     gameState.bgMusic = new Audio('sound/bgm-light.mp3');
     gameState.bgMusic.loop = true;
     gameState.bgMusic.volume = 0.5; // Set volume to 50%
+    
+    // Add event listener for when audio can play
+    gameState.bgMusic.addEventListener('canplaythrough', () => {
+        // Music is ready to play, but we'll wait for user interaction
+        console.log('Background music loaded and ready to play');
+    });
+    
+    // Add error handling
+    gameState.bgMusic.addEventListener('error', (e) => {
+        console.error('Error loading background music:', e);
+    });
 }
 
 // Play background music

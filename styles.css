@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: "Starbim", sans-serif;
+    cursor: none; /* Hide the default cursor */
 }
 
 body {
@@ -12,6 +13,7 @@ body {
     align-items: center;
     min-height: 100vh;
     overflow: hidden;
+    cursor: none; /* Hide the default cursor */
 }
 
 h1 {
@@ -953,5 +955,27 @@ h1 {
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 15px;
     border: 2px solid #ff6b9a;
+}
+
+/* Custom cursor for clickable elements */
+button, 
+.nail, 
+.character-option, 
+.category-button, 
+.option-item {
+    cursor: none; /* Hide the default cursor */
+}
+
+/* Custom cursor element */
+.custom-cursor {
+    width: 64px;
+    height: 64px;
+    background-image: url('img/mouse.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
 }
 
