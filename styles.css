@@ -979,3 +979,11 @@ button,
     transform: translate(-50%, -50%);
 }
 
+#back-button,
+#reset-button,
+#menu-button,
+#try-again-button,
+#done-button {
+    font-family: "Lexend", sans-serif;
+}
+
