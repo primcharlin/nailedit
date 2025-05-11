@@ -1,0 +1,630 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Lexend", sans-serif;
+}
+
+body {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+h1 {
+    font-family: "Lexend", sans-serif;
+}
+
+#game-container {
+    width: 1300px;
+    height: 780px;
+    position: relative;
+    background-image: url("img/background.png");
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+/* Main Menu */
+#main-menu {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(189, 195, 255, 0.428);
+    z-index: 100;
+}
+
+#main-menu h1 {
+    font-size: 72px;
+    color: #ff6b9a;
+    margin-bottom: 50px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+    width: 400px;
+    height: auto;
+    margin-bottom: 50px;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.1);
+}
+
+#main-menu button {
+    background-color: #ff6b9a;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    margin: 10px;
+    font-size: 24px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 300px;
+}
+
+#main-menu button:hover {
+    background-color: #ff4d85;
+    transform: scale(1.05);
+}
+
+/* Character Selection */
+#character-selection {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.3);
+    z-index: 100;
+}
+
+#character-selection h1 {
+    font-size: 48px;
+    color: #ff6b9a;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Game Area */
+#game-area {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    padding: 20px;
+    overflow: hidden;
+}
+
+/* Horizontal Tools Panel */
+.horizontal-tools-panel {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    width: 100px;
+    background-color: white;
+    border-radius: 20px;
+    padding: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.category-button {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: #fff;
+}
+
+.category-button:hover {
+    background-color: #ffdee7;
+}
+
+.category-button.active {
+    background-color: #ffb8cb;
+}
+
+.category-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 5px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.category-name {
+    font-size: 12px;
+    text-align: center;
+    color: #333;
+}
+
+.options-container {
+    position: absolute;
+    right: 140px; /* Position to the left of the tools panel */
+    top: 50%;
+    transform: translateY(-50%);
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    background-color: white;
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.option-item {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: #fff;
+    padding: 5px;
+}
+
+.option-item:hover {
+    transform: scale(1.1);
+    background-color: #ffdee7;
+}
+
+.option-item.selected {
+    border: 3px solid #ff6b9a;
+    background-color: #ffdee7;
+}
+
+.option-icon {
+    width: 50px;
+    height: 50px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.color-preview {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+.deco-preview {
+    width: 35px;
+    height: 35px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Character Display */
+#character-display {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+}
+
+#character-display img {
+    max-width: 60%;
+    max-height: 60%;
+    object-fit: contain;
+    transform: none;
+}
+
+/* Hand area */
+#hand {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 720px;
+    height: 200px;
+    background-color: #ffebe7;
+    border-radius: 100px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 40px;
+    z-index: 5;
+}
+
+.nail {
+    position: relative;
+    width: 72px;
+    height: 108px;
+    background-color: #ffdee7;
+    border-radius: 36px 36px 0 0;
+    cursor: pointer;
+    z-index: 5;
+    transition: all 0.2s ease;
+}
+
+#nail-1,
+#nail-2,
+#nail-3,
+#nail-4,
+#nail-5 {
+    position: relative;
+    transform: none;
+    bottom: 0;
+    left: 0;
+}
+
+.nail:hover {
+    transform: translateY(-10px);
+}
+
+/* Decoration classes */
+.glitter-gold {
+    background-image: radial-gradient(circle, #ffdc73 10%, transparent 10%),
+        radial-gradient(circle, #ffdc73 10%, transparent 10%);
+    background-color: gold;
+    background-size: 10px 10px;
+    background-position: 0 0, 5px 5px;
+}
+.glitter-silver {
+    background-image: radial-gradient(circle, #ffffff 10%, transparent 10%),
+        radial-gradient(circle, #ffffff 10%, transparent 10%);
+    background-color: silver;
+    background-size: 10px 10px;
+    background-position: 0 0, 5px 5px;
+}
+.glitter-rainbow {
+    background-image: linear-gradient(
+        45deg,
+        red,
+        orange,
+        yellow,
+        green,
+        blue,
+        indigo,
+        violet
+    );
+}
+.glitter-blue {
+    background-image: radial-gradient(circle, #ffffff 10%, transparent 10%),
+        radial-gradient(circle, #ffffff 10%, transparent 10%);
+    background-color: #00ffff;
+    background-size: 10px 10px;
+    background-position: 0 0, 5px 5px;
+}
+.glitter-pink {
+    background-image: radial-gradient(circle, #ffffff 10%, transparent 10%),
+        radial-gradient(circle, #ffffff 10%, transparent 10%);
+    background-color: #ff69b4;
+    background-size: 10px 10px;
+    background-position: 0 0, 5px 5px;
+}
+
+.pattern-stripes {
+    background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        #ff6b9a 10px,
+        #ff6b9a 20px
+    );
+}
+.pattern-dots {
+    background-image: radial-gradient(circle, #ff6b9a 20%, transparent 20%),
+        radial-gradient(circle, #ff6b9a 20%, transparent 20%);
+    background-size: 20px 20px;
+    background-position: 0 0, 10px 10px;
+}
+.pattern-zigzag {
+    background-image: linear-gradient(135deg, #ff6b9a 25%, transparent 25%) 0 0,
+        linear-gradient(225deg, #ff6b9a 25%, transparent 25%) 0 0,
+        linear-gradient(315deg, #ff6b9a 25%, transparent 25%) 0 0,
+        linear-gradient(45deg, #ff6b9a 25%, transparent 25%) 0 0;
+    background-size: 20px 20px;
+}
+.pattern-leopard {
+    background-image: radial-gradient(
+        ellipse,
+        #000000 0%,
+        #000000 30%,
+        transparent 30%
+    );
+    background-size: 30px 30px;
+    background-repeat: repeat;
+}
+.pattern-marble {
+    background-image: linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0.1),
+            rgba(255, 255, 255, 0.5)
+        ),
+        linear-gradient(120deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3));
+}
+
+.sticker-heart:after {
+    content: "❤";
+    font-size: 40px;
+    color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.sticker-star:after {
+    content: "★";
+    font-size: 40px;
+    color: gold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.sticker-flower:after {
+    content: "✿";
+    font-size: 40px;
+    color: #ff6b9a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.sticker-butterfly:after {
+    content: "🦋";
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.sticker-diamond:after {
+    content: "💎";
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.gem-round:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background-color: #00ffff;
+    border-radius: 50%;
+    box-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
+}
+.gem-square:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background-color: #ff00ff;
+    box-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff;
+}
+.gem-teardrop:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    width: 15px;
+    height: 25px;
+    background-color: #4169e1;
+    border-radius: 50% 50% 50% 0;
+    box-shadow: 0 0 5px #4169e1, 0 0 10px #4169e1;
+}
+.gem-heart:after {
+    content: "❤";
+    font-size: 25px;
+    color: #ff0000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000;
+}
+.gem-star:after {
+    content: "★";
+    font-size: 25px;
+    color: #ffd700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-shadow: 0 0 5px #ffd700, 0 0 10px #ffd700;
+}
+
+/* Challenge Mode UI */
+#challenge-ui {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    width: 240px;
+    background-color: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+#reference-image {
+    width: 100%;
+    height: 180px;
+    background-color: #ffdee7;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#timer {
+    font-size: 32px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ff6b9a;
+}
+
+/* UI Controls */
+#controls {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 24px;
+    z-index: 10;
+}
+
+.control-button {
+    background-color: #ff6b9a;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 21.6px;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.control-button:hover {
+    background-color: #ff4d85;
+}
+
+/* Modal for results */
+#result-modal {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    z-index: 200;
+}
+
+#result-title {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #ff6b9a;
+}
+
+#result-message {
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+#result-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Reference nails for challenge mode */
+.reference-nail {
+    width: 25px;
+    height: 38px;
+    background-color: #ffdee7;
+    border-radius: 12px 12px 0 0;
+    display: inline-block;
+}
+
+.character-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin: 30px 0;
+}
+
+.character-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 2px solid #ff6b9a;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.character-option:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 107, 154, 0.3);
+}
+
+.character-option img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    border: solid 2px #ff6b9a;
+}
+
+.character-option p {
+    margin: 0;
+    font-size: 1.5em;
+    color: #333;
+}
+
+#back-to-mode {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #ff6b9a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s;
+}
+
+#back-to-mode:hover {
+    background-color: #ff4d8a;
+}
