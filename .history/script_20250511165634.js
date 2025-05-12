@@ -997,8 +997,8 @@ function completeDesign() {
         clearInterval(gameState.timerInterval);
         evaluateChallenge();
     } else {
-        // For freestyle mode, show the cute popup
-        showFreestyleModal();
+        // For freestyle mode, could save the design or show a confirmation
+        alert("Design saved!");
     }
 }
 
@@ -1359,10 +1359,6 @@ const resultTitle = document.getElementById("result-title");
 const resultMessage = document.getElementById("result-message");
 const tryAgainButton = document.getElementById("try-again-button");
 const menuButton = document.getElementById("menu-button");
-const freestyleModal = document.getElementById("freestyle-modal");
-const freestylePreview = document.getElementById("freestyle-preview");
-const saveFreestyleBtn = document.getElementById("save-freestyle-btn");
-const closeFreestyleBtn = document.getElementById("close-freestyle-btn");
 
 // Create and insert horizontal tools panel to replace the existing one
 function createToolsPanel() {
@@ -1523,35 +1519,3 @@ function pauseBackgroundMusic() {
     });
     gameState.isMusicPlaying = false;
 }
-
-// Show the freestyle modal with a preview
-function showFreestyleModal() {
-    // Clone the hand area for preview
-    const hand = document.getElementById("hand");
-    const handClone = hand.cloneNode(true);
-    handClone.style.transform = "scale(0.7)";
-    handClone.style.margin = "0 auto";
-    handClone.style.pointerEvents = "none";
-    freestylePreview.innerHTML = "";
-    freestylePreview.appendChild(handClone);
-
-    document.getElementById("modal-blur-overlay").style.display = "block";
-    freestyleModal.style.display = "block";
-}
-
-// Close modal
-closeFreestyleBtn.onclick = () => {
-    freestyleModal.style.display = "none";
-    document.getElementById("modal-blur-overlay").style.display = "none";
-};
-
-// Save as image
-saveFreestyleBtn.onclick = () => {
-    // Use html2canvas to capture the preview
-    html2canvas(freestylePreview).then((canvas) => {
-        const link = document.createElement("a");
-        link.download = "my-nail-design.png";
-        link.href = canvas.toDataURL();
-        link.click();
-    });
-};

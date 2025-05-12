@@ -1025,74 +1025,22 @@ button,
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 600px;
+    width: 400px;
     background-color: white;
-    border-radius: 30px;
-    padding: 40px 40px 30px 40px;
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
     text-align: center;
-    z-index: 300;
-    min-height: 350px;
+    z-index: 200;
 }
-
-#freestyle-title {
-    font-size: 2.2em;
-    color: #ff6b9a;
-    margin-bottom: 20px;
-    font-family: "Starbim", sans-serif;
-    letter-spacing: 1px;
-}
-
 #freestyle-preview {
-    width: 420px;
-    height: 180px;
-    margin: 0 auto 30px auto;
+    width: 300px;
+    height: 120px;
+    margin: 0 auto 20px auto;
     display: flex;
     justify-content: center;
     align-items: center;
     background: #ffebe7;
-    border-radius: 40px;
-    overflow: hidden;
-    box-shadow: 0 2px 12px rgba(255, 107, 154, 0.08);
-    position: relative;
-}
-
-#freestyle-preview #hand {
-    transform: scale(1.1) translateY(10px);
-    margin: 0 auto;
-    pointer-events: none;
-    position: static !important;
-}
-
-#freestyle-modal .control-button {
-    font-size: 1.1em;
-    padding: 14px 36px;
     border-radius: 30px;
-    margin: 0 12px;
-    margin-top: 10px;
-    background: #ff6b9a;
-    color: #fff;
-    font-family: "Starbim", sans-serif;
-    letter-spacing: 1px;
-    box-shadow: 0 2px 8px rgba(255, 107, 154, 0.08);
-    transition: background 0.2s, transform 0.2s;
-}
-
-#freestyle-modal .control-button:hover {
-    background: #e12561;
-    transform: scale(1.05);
-}
-
-#modal-blur-overlay {
-    display: none;
-    position: fixed;
-    z-index: 199;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    transition: opacity 0.2s;
+    overflow: hidden;
 }
