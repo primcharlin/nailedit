@@ -1535,14 +1535,12 @@ function showFreestyleModal() {
     freestylePreview.innerHTML = "";
     freestylePreview.appendChild(handClone);
 
-    document.getElementById("modal-blur-overlay").style.display = "block";
     freestyleModal.style.display = "block";
 }
 
 // Close modal
 closeFreestyleBtn.onclick = () => {
     freestyleModal.style.display = "none";
-    document.getElementById("modal-blur-overlay").style.display = "none";
 };
 
 // Save as image

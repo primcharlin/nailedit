@@ -191,16 +191,6 @@ function setupEventListeners() {
     if (cornerResetButton) {
         cornerResetButton.addEventListener("click", resetDesign);
     }
-
-    document.body.addEventListener(
-        "click",
-        () => {
-            if (!gameState.isMusicPlaying) {
-                playBackgroundMusic();
-            }
-        },
-        { once: true }
-    );
 }
 
 // Show character selection screen
@@ -997,8 +987,8 @@ function completeDesign() {
         clearInterval(gameState.timerInterval);
         evaluateChallenge();
     } else {
-        // For freestyle mode, show the cute popup
-        showFreestyleModal();
+        // For freestyle mode, could save the design or show a confirmation
+        alert("Design saved!");
     }
 }
 
@@ -1007,30 +997,106 @@ function evaluateChallenge() {
     let score = 0;
     let totalPoints = 0;
 
+    console.log("Evaluating challenge...");
+    console.log("Reference design:", gameState.challengeReference);
+    console.log("User design:", gameState.nailDesigns);
+
+    // Compare each nail with reference design
     for (let i = 1; i <= 5; i++) {
         const userDesign = gameState.nailDesigns[i];
         const refDesign = gameState.challengeReference[i];
 
-        if (!refDesign.decoration) {
-            // Only color matters, worth 100 points
-            if (userDesign.color === refDesign.color) {
-                score += 100;
+        console.log(`\nNail ${i}:`);
+        console.log("Reference:", refDesign);
+        console.log("User:", userDesign);
+
+        // Compare color (100% of score if no decoration)
+        if (userDesign.color === refDesign.color) {
+            console.log(`Color match! +100 points`);
+            score += 100;
+        } else if (userDesign.color && refDesign.color) {
+            // Handle fancy colors
+            if (
+                userDesign.color.startsWith("fancyColor") &&
+                refDesign.color.startsWith("fancyColor")
+            ) {
+                if (userDesign.color === refDesign.color) {
+                    console.log(`Fancy color match! +100 points`);
+                    score += 100; // Full points for exact fancy color match
+                } else {
+                    console.log(
+                        `Fancy color mismatch: ${userDesign.color} vs ${refDesign.color}`
+                    );
+                }
+            } else {
+                console.log(
+                    `Color mismatch: ${userDesign.color} vs ${refDesign.color}`
+                );
             }
-            totalPoints += 100;
         } else {
-            // Both color and decoration matter, 50 each
-            if (userDesign.color === refDesign.color) {
-                score += 50;
-            }
+            console.log("No color to compare");
+        }
+        totalPoints += 100;
+
+        // Only compare decorations if both designs have them
+        if (userDesign.decoration && refDesign.decoration) {
             if (userDesign.decoration === refDesign.decoration) {
+                console.log(`Decoration match! +50 points`);
                 score += 50;
+            } else {
+                // Handle different types of decorations
+                const userDeco = userDesign.decoration;
+                const refDeco = refDesign.decoration;
+
+                if (
+                    userDeco.startsWith("pattern-") &&
+                    refDeco.startsWith("pattern-")
+                ) {
+                    if (userDeco === refDeco) {
+                        console.log(`Pattern match! +50 points`);
+                        score += 50; // Full points for exact pattern match
+                    } else {
+                        console.log(
+                            `Pattern mismatch: ${userDeco} vs ${refDeco}`
+                        );
+                    }
+                } else if (
+                    userDeco.startsWith("sticker-") &&
+                    refDeco.startsWith("sticker-")
+                ) {
+                    if (userDeco === refDeco) {
+                        console.log(`Sticker match! +50 points`);
+                        score += 50; // Full points for exact sticker match
+                    } else {
+                        console.log(
+                            `Sticker mismatch: ${userDeco} vs ${refDeco}`
+                        );
+                    }
+                } else if (
+                    userDeco.startsWith("gem") &&
+                    refDeco.startsWith("gem")
+                ) {
+                    if (userDeco === refDeco) {
+                        console.log(`Gem match! +50 points`);
+                        score += 50; // Full points for exact gem match
+                    } else {
+                        console.log(`Gem mismatch: ${userDeco} vs ${refDeco}`);
+                    }
+                } else {
+                    console.log(
+                        `Decoration type mismatch: ${userDeco} vs ${refDeco}`
+                    );
+                }
             }
-            totalPoints += 100;
+            totalPoints += 50;
         }
     }
 
+    // Calculate percentage
     const percentage = Math.round((score / totalPoints) * 100);
+    console.log(`\nFinal score: ${score}/${totalPoints} = ${percentage}%`);
 
+    // Show results
     resultTitle.textContent = "Challenge Complete!";
     resultMessage.textContent = `You scored ${percentage}% match.`;
 
@@ -1359,10 +1425,6 @@ const resultTitle = document.getElementById("result-title");
 const resultMessage = document.getElementById("result-message");
 const tryAgainButton = document.getElementById("try-again-button");
 const menuButton = document.getElementById("menu-button");
-const freestyleModal = document.getElementById("freestyle-modal");
-const freestylePreview = document.getElementById("freestyle-preview");
-const saveFreestyleBtn = document.getElementById("save-freestyle-btn");
-const closeFreestyleBtn = document.getElementById("close-freestyle-btn");
 
 // Create and insert horizontal tools panel to replace the existing one
 function createToolsPanel() {
@@ -1523,35 +1585,3 @@ function pauseBackgroundMusic() {
     });
     gameState.isMusicPlaying = false;
 }
-
-// Show the freestyle modal with a preview
-function showFreestyleModal() {
-    // Clone the hand area for preview
-    const hand = document.getElementById("hand");
-    const handClone = hand.cloneNode(true);
-    handClone.style.transform = "scale(0.7)";
-    handClone.style.margin = "0 auto";
-    handClone.style.pointerEvents = "none";
-    freestylePreview.innerHTML = "";
-    freestylePreview.appendChild(handClone);
-
-    document.getElementById("modal-blur-overlay").style.display = "block";
-    freestyleModal.style.display = "block";
-}
-
-// Close modal
-closeFreestyleBtn.onclick = () => {
-    freestyleModal.style.display = "none";
-    document.getElementById("modal-blur-overlay").style.display = "none";
-};
-
-// Save as image
-saveFreestyleBtn.onclick = () => {
-    // Use html2canvas to capture the preview
-    html2canvas(freestylePreview).then((canvas) => {
-        const link = document.createElement("a");
-        link.download = "my-nail-design.png";
-        link.href = canvas.toDataURL();
-        link.click();
-    });
-};
