@@ -15,16 +15,26 @@
     </head>
     <body>
         <div id="game-container">
+            <!-- Beau Testing -->
             <!-- Main Menu -->
             <div
                 id="main-menu"
                 class="menu">
-                <img src="img/LOGO.png" alt="Nailed It!" class="logo">
+                <img
+                    src="img/LOGO.png"
+                    alt="Nailed It!"
+                    class="logo" />
                 <button id="freestyle-button">Freestyle</button>
                 <button id="challenge-button">
-                    <img src="img/star.png" alt="star" class="star-icon left">
+                    <img
+                        src="img/star.png"
+                        alt="star"
+                        class="star-icon left" />
                     <span>CHALLENGE</span>
-                    <img src="img/star.png" alt="star" class="star-icon right">
+                    <img
+                        src="img/star.png"
+                        alt="star"
+                        class="star-icon right" />
                 </button>
             </div>
 
@@ -32,7 +42,10 @@
                 id="character-selection"
                 class="menu"
                 style="display: none">
-                <h1>Choose Your Character</h1>
+                <img
+                    src="img/choose.png"
+                    alt="Choose Your Character"
+                    class="choose-title" />
                 <div class="character-grid">
                     <div
                         class="character-option"
@@ -134,6 +147,9 @@
                 </div>
             </div>
 
+            <!-- Blur Overlay -->
+            <div id="modal-blur-overlay"></div>
+
             <!-- Result Modal -->
             <div id="result-modal">
                 <h2 id="result-title">Challenge Complete!</h2>
@@ -151,8 +167,27 @@
                     </button>
                 </div>
             </div>
+
+            <!-- Freestyle Result Modal -->
+            <div
+                id="freestyle-modal"
+                style="display: none">
+                <h2 id="freestyle-title">Your Creation!</h2>
+                <div id="freestyle-preview"></div>
+                <button
+                    id="save-freestyle-btn"
+                    class="control-button">
+                    Save Image
+                </button>
+                <button
+                    id="close-freestyle-btn"
+                    class="control-button">
+                    Close
+                </button>
+            </div>
         </div>
 
         <script src="script.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     </body>
 </html>
