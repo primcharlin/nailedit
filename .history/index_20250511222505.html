@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0" />
+        <title>Nail Salon Game</title>
+        <link
+            rel="stylesheet"
+            href="styles.css" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Lexend&display=swap"
+            rel="stylesheet" />
+    </head>
+    <body>
+        <div id="game-container">
+            <!-- Beau Testing -->
+            <!-- Main Menu -->
+            <div
+                id="main-menu"
+                class="menu">
+                <img
+                    src="img/LOGO.png"
+                    alt="Nailed It!"
+                    class="logo" />
+                <button id="freestyle-button">Freestyle</button>
+                <button id="challenge-button">
+                    <img
+                        src="img/star.png"
+                        alt="star"
+                        class="star-icon left" />
+                    <span>CHALLENGE</span>
+                    <img
+                        src="img/star.png"
+                        alt="star"
+                        class="star-icon right" />
+                </button>
+            </div>
+
+            <div
+                id="character-selection"
+                class="menu"
+                style="display: none">
+                <img
+                    src="img/choose.png"
+                    alt="Choose Your Character"
+                    class="choose-title" />
+                <div class="character-grid">
+                    <div
+                        class="character-option"
+                        data-character="1">
+                        <img
+                            src="img/Avatar1.png"
+                            alt="Character 1" />
+                        <p>Emma</p>
+                    </div>
+                    <div
+                        class="character-option"
+                        data-character="2">
+                        <img
+                            src="img/Avatar2.png"
+                            alt="Character 2" />
+                        <p>Sophia</p>
+                    </div>
+                    <div
+                        class="character-option"
+                        data-character="3">
+                        <img
+                            src="img/Avatar3.png"
+                            alt="Character 3" />
+                        <p>Olivia</p>
+                    </div>
+                </div>
+                <button id="back-to-mode">Back</button>
+            </div>
+
+            <!-- Game Area -->
+            <div
+                id="game-area"
+                class="game-area"
+                style="display: none">
+                <!-- Character Display -->
+                <div id="character-display"></div>
+
+                <!-- Tools Panel will be created dynamically -->
+                <div id="tools-panel"></div>
+
+                <div id="hand">
+                    <div
+                        class="nail"
+                        id="nail-1"></div>
+                    <div
+                        class="nail"
+                        id="nail-2"></div>
+                    <div
+                        class="nail"
+                        id="nail-3"></div>
+                    <div
+                        class="nail"
+                        id="nail-4"></div>
+                    <div
+                        class="nail"
+                        id="nail-5"></div>
+                </div>
+
+                <!-- Challenge Mode UI -->
+                <div id="challenge-ui">
+                    <h2>Reference Design</h2>
+                    <div id="reference-image">
+                        <div
+                            class="reference-nail"
+                            id="ref-nail-1"></div>
+                        <div
+                            class="reference-nail"
+                            id="ref-nail-2"></div>
+                        <div
+                            class="reference-nail"
+                            id="ref-nail-3"></div>
+                        <div
+                            class="reference-nail"
+                            id="ref-nail-4"></div>
+                        <div
+                            class="reference-nail"
+                            id="ref-nail-5"></div>
+                    </div>
+                    <div id="timer">60</div>
+                </div>
+
+                <!-- Controls -->
+                <div id="controls">
+                    <button
+                        class="control-button"
+                        id="reset-button">
+                        Reset
+                    </button>
+                    <button
+                        class="control-button"
+                        id="back-button">
+                        Main Menu
+                    </button>
+                    <button
+                        class="control-button"
+                        id="done-button">
+                        Done
+                    </button>
+                </div>
+            </div>
+
+            <!-- Blur Overlay -->
+            <div id="modal-blur-overlay"></div>
+
+            <!-- Result Modal -->
+            <div id="result-modal">
+                <h2 id="result-title">Challenge Complete!</h2>
+                <p id="result-message">You scored 85% match. Great job!</p>
+                <div id="result-buttons">
+                    <button
+                        class="control-button"
+                        id="try-again-button">
+                        Try Again
+                    </button>
+                    <button
+                        class="control-button"
+                        id="menu-button">
+                        Main Menu
+                    </button>
+                </div>
+            </div>
+
+            <!-- Freestyle Result Modal -->
+            <div
+                id="freestyle-modal"
+                style="display: none">
+                <h2 id="freestyle-title">Your Creation!</h2>
+                <div id="freestyle-preview"></div>
+                <button
+                    id="save-freestyle-btn"
+                    class="control-button">
+                    Save Image
+                </button>
+                <button
+                    id="close-freestyle-btn"
+                    class="control-button">
+                    Close
+                </button>
+            </div>
+
+            <!-- Manual Star Burst Test Button (for debugging) -->
+            <button id="star-burst-test-btn" style="position: absolute; top: 10px; right: 10px; z-index: 10000;">Test Star Burst</button>
+        </div>
+
+        <script src="script.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    </body>
+</html>

@@ -689,13 +689,13 @@ h1 {
 #result-modal {
     display: none;
     position: absolute;
-    top: 65%;
+    top: 75%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 400px;
+    width: 250px;
     background-color: white;
     border-radius: 20px;
-    padding: 24px;
+    padding: 15px;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
     text-align: center;
     z-index: 200;
@@ -981,7 +981,6 @@ h1 {
     flex-direction: column;
     align-items: center;
     gap: 15px;
-    position: relative;
 }
 
 .character-name {
@@ -1108,34 +1107,30 @@ button,
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 200px;
-    height: 200px;
     pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    /* border: 2px dashed red; */ /* Uncomment for debugging */
+    width: 0;
+    height: 0;
+    z-index: 10;
 }
 .star-burst-star {
     position: absolute;
-    left: 50%;
-    top: 50%;
+    left: 0;
+    top: 0;
     opacity: 0.9;
     will-change: transform, opacity;
     pointer-events: none;
-    transform: translate(-50%, -50%) scale(1) rotate(0deg);
-    animation: star-burst-move 1.2s cubic-bezier(0.4,0.2,0.2,1) forwards;
+    animation: star-burst-move 1.2s cubic-bezier(0.4, 0.2, 0.2, 1) forwards;
 }
 @keyframes star-burst-move {
     0% {
+        transform: translate(0, 0) scale(1) rotate(0deg);
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1) rotate(0deg);
     }
     80% {
         opacity: 1;
     }
     100% {
+        /* These will be set inline for each star */
         opacity: 0;
-        /* Use CSS vars for direction, distance, and rotation */
-        transform: translate(calc(-50% + var(--star-x)), calc(-50% + var(--star-y))) scale(1.2) rotate(var(--star-rot));
     }
 }

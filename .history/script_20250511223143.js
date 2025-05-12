@@ -1029,8 +1029,8 @@ function showStarBurstOnAvatar() {
         img.style.width = img.style.height = size + "px";
         // Random angle (0 to 360 degrees)
         const angle = Math.random() * 360;
-        // Increased random distance (160 to 280px)
-        const dist = 160 + Math.random() * 120;
+        // Increased random distance (100 to 180px)
+        const dist = 100 + Math.random() * 80;
         // Random rotation (180 to 720 degrees)
         const rot = 180 + Math.random() * 540;
         // Animation delay for a more dynamic effect
