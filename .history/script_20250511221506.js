@@ -1010,14 +1010,10 @@ function showStarBurstOnAvatar() {
     const avatarImg = characterDisplay.querySelector("img");
     if (!avatarImg) return;
 
-    // Remove any existing burst first
-    const oldBurst = characterDisplay.querySelector('.star-burst-container');
-    if (oldBurst) oldBurst.remove();
-
     // Create a container for the stars
     let burst = document.createElement("div");
     burst.className = "star-burst-container";
-    characterDisplay.appendChild(burst);
+    avatarImg.parentElement.appendChild(burst);
 
     // Generate 20 stars with random properties
     for (let i = 0; i < 20; i++) {
@@ -1029,8 +1025,8 @@ function showStarBurstOnAvatar() {
         img.style.width = img.style.height = size + "px";
         // Random angle (0 to 360 degrees)
         const angle = Math.random() * 360;
-        // Increased random distance (160 to 280px)
-        const dist = 160 + Math.random() * 120;
+        // Random distance (60 to 120px)
+        const dist = 60 + Math.random() * 60;
         // Random rotation (180 to 720 degrees)
         const rot = 180 + Math.random() * 540;
         // Animation delay for a more dynamic effect
@@ -1039,10 +1035,19 @@ function showStarBurstOnAvatar() {
         const rad = (angle * Math.PI) / 180;
         const x = Math.cos(rad) * dist;
         const y = Math.sin(rad) * dist;
-        img.style.setProperty('--star-x', `${x}px`);
-        img.style.setProperty('--star-y', `${y}px`);
-        img.style.setProperty('--star-rot', `${rot}deg`);
-        img.style.animationDelay = `${delay}s`;
+        img.style.animation = `star-burst-move 1.2s cubic-bezier(0.4,0.2,0.2,1) forwards`;
+        img.style.animationDelay = delay + "s";
+        img.style.transform = `translate(0,0) scale(1) rotate(0deg)`;
+        // Animate with Web Animations API for unique end position and rotation
+        img.animate([
+            { transform: `translate(0,0) scale(1) rotate(0deg)`, opacity: 1 },
+            { transform: `translate(${x}px,${y}px) scale(1.2) rotate(${rot}deg)`, opacity: 0 }
+        ], {
+            duration: 1200,
+            easing: 'cubic-bezier(0.4,0.2,0.2,1)',
+            fill: 'forwards',
+            delay: delay * 1000
+        });
         burst.appendChild(img);
     }
 
@@ -1056,15 +1061,19 @@ function showStarBurstOnAvatar() {
 function evaluateChallenge() {
     let score = 0;
     let totalPoints = 0;
+
     for (let i = 1; i <= 5; i++) {
         const userDesign = gameState.nailDesigns[i];
         const refDesign = gameState.challengeReference[i];
+
         if (!refDesign.decoration) {
+            // Only color matters, worth 100 points
             if (userDesign.color === refDesign.color) {
                 score += 100;
             }
             totalPoints += 100;
         } else {
+            // Both color and decoration matter, 50 each
             if (userDesign.color === refDesign.color) {
                 score += 50;
             }
@@ -1074,26 +1083,30 @@ function evaluateChallenge() {
             totalPoints += 100;
         }
     }
+
     const percentage = Math.round((score / totalPoints) * 100);
+
+    // Update avatar expression based on score
     const characterDisplay = document.getElementById("character-display");
     const avatarImg = characterDisplay.querySelector("img");
-    let isHappy = false;
     if (avatarImg) {
         if (gameState.selectedCharacter === "custom") {
             const { skinTone, hairStyle, eyeColor } = gameState.characterCustomization;
             const newExpression = percentage >= 50 ? '-happy' : '-mad';
             avatarImg.src = `img/avatar_${skinTone}-${hairStyle}-${eyeColor}${newExpression}.png`;
-            isHappy = (newExpression === '-happy');
+        } else {
+            // For default characters, keep current behavior (no expression change)
         }
     }
-    // Show star burst only if happy
-    if (percentage >= 50 && isHappy) {
-        setTimeout(() => {
-            showStarBurstOnAvatar();
-        }, 120); // Small delay to ensure image is updated
+
+    // Show star burst if score is 50 or more
+    if (percentage >= 50) {
+        showStarBurstOnAvatar();
     }
+
     resultTitle.textContent = "Challenge Complete!";
     resultMessage.textContent = `You scored ${percentage}% match.`;
+
     if (percentage >= 90) {
         resultMessage.textContent += " Perfect! You're a nail art master!";
         gameState.challengeLevel = Math.min(gameState.challengeLevel + 1, 5);
@@ -1101,10 +1114,12 @@ function evaluateChallenge() {
         resultMessage.textContent += " Great job! Keep practicing!";
         gameState.challengeLevel = Math.min(gameState.challengeLevel + 1, 5);
     } else if (percentage >= 60) {
-        resultMessage.textContent += " Good effort! Try again to improve your score.";
+        resultMessage.textContent +=
+            " Good effort! Try again to improve your score.";
     } else {
         resultMessage.textContent += " Keep practicing! You can do better!";
     }
+
     resultModal.style.display = "block";
 }
 
