@@ -91,7 +91,6 @@ function initGame() {
     createToolsPanel();
     setupEventListeners();
     initBackgroundMusic();
-    playBackgroundMusic(); // Start playing music when game initializes
     initCustomCursor(); // Initialize custom cursor
 }
 
@@ -192,15 +191,12 @@ function setupEventListeners() {
         cornerResetButton.addEventListener("click", resetDesign);
     }
 
-    document.body.addEventListener(
-        "click",
-        () => {
-            if (!gameState.isMusicPlaying) {
-                playBackgroundMusic();
-            }
-        },
-        { once: true }
-    );
+    // Add click event listener to start music on first interaction
+    document.body.addEventListener("click", () => {
+        if (!gameState.isMusicPlaying) {
+            playBackgroundMusic();
+        }
+    }, { once: true }); // Use once: true to ensure it only triggers once
 }
 
 // Show character selection screen
