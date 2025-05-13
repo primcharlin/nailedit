@@ -14,10 +14,12 @@ Select from default avatars or create your own custom character with name, skin,
     Click on a nail to apply the selected color or decoration.
     Switch between tool categories using the panel on the right.
     Reset or finish your design using the bottom control buttons.
+    In Freestyle mode: preview your final look and save it as an image.
   
   - Challenge: Match the reference nail design within the time limit. Your score depends on how accurate your design is.
+    Click on a nail to apply the selected color or decoration.
+    Switch between tool categories using the panel on the right.
     In Challenge mode: press **Done** to see your score.
-    In Freestyle mode: preview your final look and save it as an image.
 
 
 ## 🎯 Purpose
