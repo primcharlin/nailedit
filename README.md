@@ -18,7 +18,8 @@ Select from default avatars or create your own custom character with name, skin,
   - Challenge: Match the reference nail design within the time limit. Your score depends on how accurate your design is.
     In Challenge mode: press **Done** to see your score.
     In Freestyle mode: preview your final look and save it as an image.
-
+    
+-----------------------------------------------------------------------------------------------------------------------------
 
 ## 🎯 Purpose
 
